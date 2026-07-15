@@ -1,0 +1,34 @@
+# LaTeX 编译辅助文件
+*.aux
+*.bbl
+*.blg
+*.idx
+*.ind
+*.lof
+*.lot
+*.out
+*.toc
+*.nav
+*.snm
+*.vrb
+*.synctex.gz
+*.fls
+*.fdb_latexmk
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# 系统
+Thumbs.db
+.DS_Store
+*.tmp
+
+# 生成的 PDF（每次编译会重新生成，不纳入版本控制）
+# 如需保留 PDF，注释掉下面这行
+# *.pdf
+
+# 环境
+.env
