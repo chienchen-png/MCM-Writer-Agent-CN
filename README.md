@@ -184,33 +184,33 @@ Agent 提供写作流水线，但以下内容需要你**自行放入对应文件
 ```mermaid
 graph TB
     subgraph 准备阶段
-        A[CNKI 检索文献] --> A2[MinerU PDF→MD]
+        A[CNKI 检索文献] --> A2[MinerU PDF转MD]
         A2 --> B[01 阅读范文提取风格]
     end
-    
+
     subgraph 写作阶段
         C[02 生成大纲] --> D[03 逐章写作]
         E[04 图表设计+绘制]
-        E --> E1[数据图: matplotlib]
-        E --> E2[流程图: draw.io]
+        E --> E1[数据图 matplotlib]
+        E --> E2[流程图 draw.io]
     end
-    
+
     subgraph 评审阶段
         F[05 评委模拟打分]
     end
-    
+
     subgraph 输出阶段
         G[06 LaTeX 格式合规检查]
-        G --> H[MD → LaTeX 填充]
+        G --> H[MD转LaTeX填充]
         H --> I[XeLaTeX 编译]
-        I --> J{编译成功?}
-        J -->|是| K[📄 最终 PDF]
+        I --> J{编译成功}
+        J -->|是| K[最终 PDF]
         J -->|否| L[自动诊断修复]
         L --> I
     end
-    
+
     B --> C
-    D -.->|用户说"画图"| E
+    D -.->|用户说画图| E
     D --> F
     F --> G
 
