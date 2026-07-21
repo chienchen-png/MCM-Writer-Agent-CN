@@ -26,26 +26,6 @@
 
 ## 功能总览
 
-```mermaid
-graph LR
-    A[用户指令] --> B[总控 Agent]
-    B --> C[01 文献阅读]
-    B --> D[02 大纲规划]
-    B --> E[03 论文写作]
-    B --> F[04 图表设计]
-    B --> G[05 论文评审]
-    B --> H[06 LaTeX 排版]
-    E -.->|需说"画图"| F
-    H --> I[📄 最终 PDF]
-    C --> J[CNKI 知网]
-    C --> K[MinerU PDF→MD]
-    F --> L[matplotlib 数据图]
-    F --> M[draw.io 流程图]
-    
-    style A fill:#4A90D9,color:#fff
-    style B fill:#E6A817,color:#000
-    style I fill:#2E7D32,color:#fff
-```
 
 | 能力 | 说明 |
 |------|------|
