@@ -31,7 +31,7 @@ trigger:
 1. `当前赛题/赛题原文/格式要求.md` 已存在
 2. `当前赛题/LaTeX正文/` 目录已存在（含 `.tex` 主文件和 `.cls` 类文件）
 3. `当前赛题/论文草稿/分章节/` 中已有至少一个章节文件
-4. Python 环境（matplotlib 可用，用于图表 PNG 编译时引用检查）
+4. `当前赛题/论文草稿/图表/` 中有待嵌入的图表 PNG 文件（编译时检查引用完整性）
 
 若条件不满足，向用户报告缺失项并暂停。
 
@@ -119,16 +119,15 @@ trigger:
 
 | Markdown 章节文件 | LaTeX 写入位置 |
 |------------------|---------------|
-| `01_题目及关键词.md` | ① `\title{...}` 标题；② `\keywords{...}` 关键词 |
-| `02_摘要.md` | `\begin{abstract} ... \end{abstract}` 内部 |
-| `03_问题重述.md` | `\section{问题重述}` |
-| `04_模型假设与符号说明.md` | `\section{模型假设}` + `\section{符号说明}` |
-| `05_Q1_模型建立与求解.md` | `\section{Q1 模型建立与求解}` |
-| `06_Q2_模型建立与求解.md` | `\section{Q2 模型建立与求解}` |
-| `07_Q3_模型建立与求解.md` | `\section{Q3 模型建立与求解}` |
-| `08_灵敏度分析.md` | `\section{灵敏度分析}` |
-| `09_模型评价与推广.md` | `\section{模型评价与推广}` |
-| `10_参考文献.md` | `\begin{thebibliography}{99} ... \end{thebibliography}` |
+| `00_摘要.md` | `\begin{abstract} ... \end{abstract}` 内部；`\keywords{...}` 关键词 |
+| `01_问题重述.md` | `\section{问题重述}` |
+| `02_模型假设与符号说明.md` | `\section{模型假设}` + `\section{符号说明}` |
+| `03_Q1_模型建立与求解.md` | `\section{Q1 模型建立与求解}` |
+| `04_Q2_模型建立与求解.md` | `\section{Q2 模型建立与求解}` |
+| `05_Q3_模型建立与求解.md` | `\section{Q3 模型建立与求解}` |
+| `06_灵敏度分析.md` | `\section{灵敏度分析}` |
+| `07_模型评价与推广.md` | `\section{模型评价与推广}` |
+| `08_参考文献.md` | `\begin{thebibliography}{99} ... \end{thebibliography}` |
 
 > 若仅写了部分章节，只填充已完成的章节。已填充的章节保持不变。
 
