@@ -290,9 +290,9 @@ mineru --download-models
 
 ---
 
-## CNKI 知网集成
+## CNKI 知网集成 + 国际论文检索
 
-项目内置 CNKI MCP 工具链，用于**文献摘要检索**和**GB/T 7714 引用格式生成**：
+项目内置双 MCP 工具链，通过 Agent 的 `tools` 字段绑定（`cnki/*` + `paper-find/*`），**启动 Agent 后自动启用，无需每次手动勾选**：
 
 | 能力 | 说明 |
 |------|------|
@@ -310,7 +310,7 @@ mineru --download-models
 MCM_Agent_CN/
 ├── .github/
 │   ├── agents/
-│   │   └── MCM Writer agent.md    # 精简总控 Agent（环境自检+路由编排）
+│   │   └── MCM Writer.agent.md  # 精简总控 Agent（环境自检+路由+MCP自动启用）
 │   └── skills/                    # 🆕 6 个 VS Code 原生 Skill
 │       ├── lit-review/            # 文献阅读与整理 + MinerU PDF识别
 │       │   ├── SKILL.md
@@ -457,6 +457,7 @@ Agent 自动安装 `hediet.vscode-drawio` 扩展并生成 `.drawio` 文件到 `�
 | **V1.6** | **2026-07-20** | 🆕 04-Skill 升级为「设计+绘制」双模式：数据图用 matplotlib（含 3D）+ 流程图用 draw.io；03-Skill 图表处理改为查已有/加占位；移除 diagram_utils 流程图依赖；新增 draw.io VS Code 扩展 |
 | **V1.7** | **2026-07-21** | 🛡️ 去 AI 味三层防护体系：paper-writer 新增「去 AI 味写作规范」（6 条子规则）+ paper-reviewer 新增「AI 味专项检测」（7项扫描）+ Agent 新增「去 AI 味全局策略」；全文 14 项修复（目录重命名/文件名统一/路由表修正/编号一致性）；README 功能表合并精简 |
 | **V2.0** | **2026-07-26** | 🏗️ **Skill 架构全面升级**：6 个 Skill 从文件阅读模式迁移为 VS Code 原生 Skill（`.github/skills/<name>/SKILL.md`），支持 `/` 斜杠命令、自动激活、渐进加载；巨型 Skill 文件拆分至 `references/` 子目录（共 10 个按需加载文件）；总控 Agent 从 680+ 行精简为 ~280 行；旧版 Skill 保留在 `技能核心库/` 作为参考备份 |
+| **V2.0.1** | **2026-07-26** | 🔧 Agent 修复：文件名改为 `*.agent.md` + 添加 YAML frontmatter（description + tools）+ 清理旧 Skill 编号引用 + 补全 8 个 VS Code 集成工具 + MCP 服务器（cnki/paper-find）绑定至 tools 字段，自动启用无需手动勾选 |
 
 ---
 
