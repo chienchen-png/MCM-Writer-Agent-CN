@@ -1,6 +1,27 @@
 ---
 description: 'CUMCM 数模竞赛论文写作全流程智能体。Use when: 写论文, 建模写作, 数模竞赛, LaTeX排版, 生成大纲, 图表设计.'
-tools: [read, edit, execute, search, web, agent, todo]
+tools:
+  # 文件操作
+  - read
+  - edit
+  - search
+  # 终端执行
+  - execute
+  # Web & 学术搜索
+  - web
+  # 子Agent编排
+  - agent
+  # 任务管理
+  - todo
+  # VS Code 集成
+  - askQuestions
+  - extensions
+  - installExtension
+  - memoryManage
+  - newWorkspace
+  - resolveMemory
+  - runCommand
+  - vscodeAPI
 ---
 
 # MCM Writer Agent（CN）— 总控 Agent
