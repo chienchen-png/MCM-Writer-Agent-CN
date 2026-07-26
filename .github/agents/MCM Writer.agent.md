@@ -22,6 +22,9 @@ tools:
   - resolveMemory
   - runCommand
   - vscodeAPI
+  # MCP 服务器（自动启用，无需每次手动勾选）
+  - cnki/*          # CNKI 知网文献检索 + GB/T 7714 引用生成
+  - paper-find/*    # Crossref 国际论文搜索 + PDF下载
 ---
 
 # MCM Writer Agent（CN）— 总控 Agent
@@ -409,8 +412,17 @@ MinerU 是上海 AI Lab 开源的 PDF 高精度识别工具，支持：
 | 逻辑流程图 | draw.io（hediet.vscode-drawio） | 生成 .drawio 文件，VS Code 编辑器打开编辑 |
 | 图片查看 | view_image | 展示生成的图表 PNG |
 | 学术搜索 | CNKI 搜索（仅摘要 + GB/T 7714 引用格式） | 中文文献摘要检索与引用格式生成 |
-| 论文搜索 | search_semantic / search_repec / get_crossref_paper_by_doi | 国际论文摘要检索与引用格式生成 |
+| 论文搜索 | paper-find MCP（Crossref + arXiv + Sci-Hub） | 国际论文摘要检索与 PDF 下载 |
 | PDF 识别 | MinerU（`F:\MinerU\venv\Scripts\mineru.exe`） | 往届数模范文 PDF → Markdown（公式/表格/图片） |
+
+### 7.4 MCP 服务器配置（自动启用）
+
+以下 MCP 服务器已通过 `tools` 字段声明，Agent 启动时自动启用，无需每次手动勾选：
+
+| MCP 服务器 | 用途 | 核心能力 |
+|-----------|------|---------|
+| `cnki` | CNKI 知网 | 中文论文检索 / GB/T 7714 引用格式 / PDF 下载（需登录） |
+| `paper-find` | 国际论文 | Crossref 搜索 / arXiv PDF 下载 / Sci-Hub 下载 / Semantic Scholar |
 
 ### 7.2 Python 环境配置
 
