@@ -247,7 +247,7 @@ MinerU 是上海 AI Lab 开源的 PDF 高精度识别工具，支持：
 | `当前赛题/LaTeX正文/` | `MCM_Agent_CN/赛题01/LaTeX正文/` |
 | `当前赛题/进度日志.md` | `MCM_Agent_CN/赛题01/进度日志.md` |
 | `知识库/` | `MCM_Agent_CN/知识库/` |
-| `技能核心库/` | `MCM_Agent_CN/技能核心库/` |
+| `技能核心库/` | `MCM_Agent_CN/技能核心库/`（仅供参考备份，Agent 不从此处读取 Skill） |
 
 ### 2.3 多赛题切换
 
@@ -343,8 +343,8 @@ MinerU 是上海 AI Lab 开源的 PDF 高精度识别工具，支持：
 
 1. **会话启动**：先执行环境自检（第一章）。
 2. **任务启动前**：读取当前赛题的 `进度日志.md` 和 `赛题配置.md`，确认进度。
-3. **触发 Skill 前**：读取对应 `技能核心库/0X-XXX SKILL.md` 获取完整指令。
-4. **路径解析**：始终将 Skill 中的虚拟路径解析为实际路径后再执行。
+3. **Skill 自动激活**：6 个 Skill 已部署为 VS Code 原生 Skill（`.github/skills/`），VS Code 会根据用户指令自动加载对应 Skill 的 SKILL.md。你无需手动读取 Skill 文件。
+4. **路径解析**：始终将 Skill 中的虚拟路径（`当前赛题/`、`知识库/`）解析为实际路径后再执行。
 
 ---
 
@@ -402,7 +402,7 @@ Python 执行: 优先使用 mcp_provides_tool_pylanceRunCodeSnippet，复杂脚�
 | 3D 图（曲面/散点/曲线） | Python matplotlib `projection='3d'` | `mcp_provides_tool_pylanceRunCodeSnippet` | `.png` |
 | 逻辑流程图（算法/决策树/模型结构） | draw.io | 生成 XML → `create_file` | `.drawio` |
 
-> 详细绘制规范见 `技能核心库/04-图表设计 SKILL.md` 模式二。
+> 详细绘制规范见 chart-designer Skill（`.github/skills/chart-designer/SKILL.md`）模式二。
 
 ---
 
@@ -416,8 +416,8 @@ Python 执行: 优先使用 mcp_provides_tool_pylanceRunCodeSnippet，复杂脚�
 6. **评审任务**：加载 `知识库/模板与规范/国赛评分细则.md` 作为评分基准。
 7. **文献引用**：写作时参考范文模板的文献引用规范；通过 CNKI 检索获取真实文献的摘要和 GB/T 7714 引用格式，不得编造引用。
 8. **日志更新**：每次完成任务后，在当前赛题的 `进度日志.md` 追加一条记录。
-9. **LaTeX 任务**：读取 `当前赛题/赛题原文/格式要求.md` 作为格式基准；填充前必须先做格式合规检查；编译使用 XeLaTeX（非 pdfLaTeX）。
-10. **PDF 识别任务**：调用 01-Skill 中的 MinerU 流程；仅用于往届数模竞赛优秀论文（范文），不用于 CNKI 期刊论文；输出到 `知识库/文献库/范文存档/{A,B,C}题/`；仅保留最终 Markdown 文件，清理中间产物。
+9. **LaTeX 任务**：读取 `当前赛题/赛题原文/格式要求.md` 作为格式基准；填充前必须先做格式合规检查（16项）；编译使用 XeLaTeX（非 pdfLaTeX）。
+10. **PDF 识别任务**：调用 lit-review Skill 中的 MinerU 流程；仅用于往届数模竞赛优秀论文（范文），不用于 CNKI 期刊论文；输出到 `知识库/文献库/范文存档/{A,B,C}题/`；仅保留最终 Markdown 文件，清理中间产物。
 
 ---
 
@@ -469,13 +469,15 @@ Python 执行: 优先使用 mcp_provides_tool_pylanceRunCodeSnippet，复杂脚�
 
 ---
 
-## 十二、Skills 索引
+## 十二、Skills 索引（VS Code 原生）
 
-| Skill 编号 | Skill 名称 | 文件路径 |
-|-----------|-----------|---------|
-| 01 | 文献阅读与整理 | `MCM_Agent_CN/技能核心库/01-文献阅读与整理 SKILL.md` |
-| 02 | 论文大纲规划 | `MCM_Agent_CN/技能核心库/02-论文大纲规划 SKILL.md` |
-| 03 | 论文写作 | `MCM_Agent_CN/技能核心库/03-论文写作 SKILL.md` |
-| 04 | 图表设计与绘制 | `MCM_Agent_CN/技能核心库/04-图表设计 SKILL.md` |
-| 05 | 论文评审 | `MCM_Agent_CN/技能核心库/05-论文评审 SKILL.md` |
-| 06 | LaTeX 模板填充与排版 | `MCM_Agent_CN/技能核心库/06-LaTeX 模板填充与排版 SKILL.md` |
+| Skill 名称 | 原生路径 | 说明 |
+|-----------|---------|------|
+| lit-review | `.github/skills/lit-review/SKILL.md` | 文献阅读与整理 + MinerU PDF识别 |
+| outline-planner | `.github/skills/outline-planner/SKILL.md` | 论文大纲规划 |
+| paper-writer | `.github/skills/paper-writer/SKILL.md` | 论文写作 + 去AI味 + CNKI引用 |
+| chart-designer | `.github/skills/chart-designer/SKILL.md` | 图表设计+绘制（matplotlib/draw.io） |
+| paper-reviewer | `.github/skills/paper-reviewer/SKILL.md` | 论文评审（质检+评委） |
+| latex-builder | `.github/skills/latex-builder/SKILL.md` | LaTeX 填充/检查/修复 → PDF |
+
+> 📦 旧版 Skill 文件保留在 `MCM_Agent_CN/技能核心库/` 作为参考备份，Agent 不再从该目录读取。VS Code 通过 `.github/skills/` 下的原生 Skill 自动激活。
