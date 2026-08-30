@@ -1,0 +1,11 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcmplot"
+version = "0.1.0"
+description = "MCM 论文绘图统一样式基座"
+
+[tool.setuptools]
+packages = ["mcmplot"]

@@ -1,10 +1,18 @@
 # Python matplotlib 数据图绘制规范
 
+> ⚠️ **统一样式基座（阶段二已建立）**：所有绘图脚本**必须**使用 `mcmplot` 包统一设置字体/配色/DPI，**不再手写 rcParams**。
+> 脚本顶部统一写法：
+> ```python
+> from mcmplot.style import fig_style
+> fig_style()   # 自动设好全局字体/字号/配色/DPI（含中文字体回退）
+> ```
+
 ## 基本要求
 - 使用 `mcp_provides_tool_pylanceRunCodeSnippet` 执行代码
+- 脚本开头必须 `from mcmplot.style import fig_style` + `fig_style()`
 - 代码必须包含**完整中文注释**，说明每段逻辑
 - 图表中**不出现图表名称**（标题在正文中通过"如图X-Y所示"引用）
-- 所有文字标注使用**中文**
+- 所有文字标注使用**中文**（mcmplot 已自动回退到中文字体，如微软雅黑）
 - 布局**紧凑**，减少留白，`plt.tight_layout(pad=1.0)`
 - 保存到 `当前赛题/论文草稿/图表/图X-Y.png`
 - DPI ≥ 300，格式 PNG
@@ -14,25 +22,34 @@
 
 ## 学术配色方案
 
-| 配色方案 | 主色1 | 主色2 | 主色3 | 主色4 | 适用场景 |
-|----------|-------|-------|-------|-------|---------|
-| A：学术蓝-橙 | `#2B579A` | `#E87722` | `#6B8E23` | `#8B008B` | 默认通用 |
-| B：暖色对比 | `#C0392B` | `#2980B9` | `#F39C12` | `#27AE60` | 对比突出 |
-| C：冷色专业 | `#1A5276` | `#117864` | `#7D3C98` | `#B03A2E` | 正式场合 |
+> ⚠️ **配色唯一来源是 `color-schemes.md`（全局统一色板）**，不再使用旧的"多套方案"。全文共用一个主色调色板，仅靠图型/线型/标记区分。
+
+取色统一用 `mcmplot.colors`：
+
+```python
+from mcmplot.colors import get_palette  # 或 SCHEME_A / SCHEME_B / SCHEME_C
+BLUE   = '\#2B579A'   # 主蓝（主序列/方案一）
+ORANGE = '\#E87722'   # 警示橙（对比序列/方案二）
+```
+
+> 完整色板 + 语义约定 + 章节色板见 `references/color-schemes.md`。
 
 ---
 
 ## 2D 图表代码模板
 
+> 脚本开头统一：`from mcmplot.style import fig_style`，颜色用 `mcmplot.colors` 取全局色板（勿手写新色值）。
+
 ```python
+from mcmplot.style import fig_style
+from mcmplot.colors import SCHEME_A
+fig_style()   # 统一字体/字号/配色/DPI（含中文字体回退）
 import matplotlib.pyplot as plt
 import numpy as np
 
-# ========== 配色：学术蓝-橙（方案A） ==========
-BLUE   = '#2B579A'
-ORANGE = '#E87722'
-GREEN  = '#6B8E23'
-PURPLE = '#8B008B'
+# ========== 取全局色板（方案A） ==========
+BLUE   = SCHEME_A['blue']
+ORANGE = SCHEME_A['orange']
 
 # ========== 数据（从运行结果提取） ==========
 x = np.array([...])       # X轴数据
@@ -62,13 +79,18 @@ plt.close()
 
 ## 3D 图表代码模板
 
+> 脚本开头统一：`from mcmplot.style import fig_style`。
+
 ```python
+from mcmplot.style import fig_style
+from mcmplot.colors import SCHEME_C
+fig_style()
 import matplotlib.pyplot as plt
 import numpy as np
 
-# ========== 配色 ==========
-BLUE   = '#2B579A'
-ORANGE = '#E87722'
+# ========== 取全局色板（方案C） ==========
+BLUE   = SCHEME_C['deep_blue']
+ORANGE = SCHEME_C['dark_red']
 
 # ========== 创建 3D 画布 ==========
 fig = plt.figure(figsize=(8, 6))
