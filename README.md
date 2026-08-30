@@ -128,6 +128,7 @@
 | 组件                           | Agent 自动安装命令                                         |
 | ------------------------------ | ---------------------------------------------------------- |
 | Python 包（matplotlib/Pillow） | `pip install ...`                                        |
+| mcmplot（绘图样式包）          | `cd MCM_Agent_CN && python -m pip install -e .`（项目自有包，`from mcmplot.style import fig_style` 即用） |
 | draw.io VS Code 扩展           | `code --install-extension hediet.vscode-drawio`          |
 | TeX Live（XeLaTeX）            | `winget install TeXLive.TeXLive --silent`                |
 | MinerU（PDF→MD）              | `git clone` + `pip install -e .`（Agent 自动引导配置） |
@@ -273,6 +274,11 @@ mineru --download-models
 ---
 
 ## 目录结构
+
+> **mcmplot 为何在项目根目录，而非 `.github/skills/` 下？** 两者定位不同：
+> - **`.github/skills/` 里的配置**（`chart-types.md`、`color-schemes.md`、`templates/`）是 **Markdown 说明文案**，供 AI 阅读、决策用；
+> - **`mcmplot/` 是可安装的 Python 代码包**，供绘图脚本真正 `from mcmplot.style import fig_style` 调用。它必须在 Python 的 `sys.path` 中才能被 import，故作为项目根下的可安装包，用 `pyproject.toml` 声明、`pip install -e .` 装入 `.venv`。
+> - **分工逻辑**：Skill 负责「讲清楚怎么画」，`mcmplot` 负责「真正能画」。
 
 ```text
 MCM_Agent_CN/

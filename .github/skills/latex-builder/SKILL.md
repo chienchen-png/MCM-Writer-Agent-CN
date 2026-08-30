@@ -53,17 +53,22 @@ argument-hint: '填充LaTeX / 生成PDF / 修复LaTeX语法'
 
 #### 步骤 A.2：填充内容
 
-按以下映射将 Markdown 章节写入 `.tex`：
+> 🆕 **分章结构**：主入口为 `2026_new_main.tex`，各章内容是 `chapter/*.tex`（用 `\input{}` 引入）。按以下映射将 Markdown 章节写入对应 `chapter/` 文件：
 
-| Markdown 章节文件 | LaTeX 写入位置 |
+| Markdown 章节文件 | 写入位置（chapter/*.tex） |
 |------------------|---------------|
-| `00_摘要.md` | `\begin{abstract} ... \end{abstract}` + `\keywords{...}` |
-| `01_问题重述.md` | `\section{问题重述}` |
-| `02_模型假设与符号说明.md` | `\section{模型假设}` + `\section{符号说明}` |
-| `03_Q1_模型建立与求解.md` ～ `05_Q3_模型建立与求解.md` | 对应 `\section{QX ...}` |
-| `06_灵敏度分析.md` | `\section{灵敏度分析}` |
-| `07_模型评价与推广.md` | `\section{模型评价与推广}` |
-| `08_参考文献.md` | `\begin{thebibliography}{99} ... \end{thebibliography}` |
+| `00_摘要.md` | `2026_new_main.tex` 的 `\begin{abstract} ... \end{abstract}` + `\keywords{...}` |
+| `01_问题重述.md` | `chapter/1_restatement.tex` |
+| `02_问题分析.md`（可选） | `chapter/2_analysis.tex` |
+| `03_模型假设与符号说明.md` | `chapter/3_assumptions.tex` + `chapter/4_notation.tex` |
+| `04_Q1_模型建立与求解.md` | `chapter/5_model_q1.tex` |
+| `05_Q2_模型建立与求解.md` | `chapter/6_model_q2.tex` |
+| `06_Q3_模型建立与求解.md` | `chapter/7_model_q3.tex` |
+| `07_灵敏度分析.md` | `chapter/8_sensitivity.tex` |
+| `08_模型评价与推广.md` | `chapter/9_evaluation.tex` |
+| `09_参考文献.md` | `chapter/11_reference.tex`（`\begin{thebibliography}{99}`） |
+| `10_AI声明.md`（可选） | `chapter/10_ai_declaration.tex` |
+| 附录/代码 | `chapter/A_appendix.tex` / `chapter/B_code.tex` |
 
 #### 步骤 A.3：Markdown → LaTeX 转换规则
 
@@ -75,9 +80,9 @@ argument-hint: '填充LaTeX / 生成PDF / 修复LaTeX语法'
 
 ```powershell
 Push-Location "当前赛题/LaTeX正文/"
-latexmk -xelatex -interaction=nonstopmode example.tex
+latexmk -xelatex -interaction=nonstopmode 2026_new_main.tex
 # 若 latexmk 不可用：
-xelatex -interaction=nonstopmode example.tex
+xelatex -interaction=nonstopmode 2026_new_main.tex
 ```
 
 编译后检查 `.pdf` 是否生成，扫描 `.log` 中的 Error/Warning。若有错误 → 自动切换 🅲 修复模式。
@@ -86,9 +91,9 @@ xelatex -interaction=nonstopmode example.tex
 
 ```
 ✅ LaTeX 填充完成
-📄 源文件：当前赛题/LaTeX正文/example.tex
-📕 PDF 文件：当前赛题/LaTeX正文/example.pdf
-📊 填充章节：X/10 个章节
+📄 源文件：当前赛题/LaTeX正文/2026_new_main.tex（含 chapter/ 分章）
+📕 PDF 文件：当前赛题/LaTeX正文/2026_new_main.pdf
+📊 填充章节：X/11 个章节
 ⚠️  编译警告：N 条  |  🔴 编译错误：0 条
 ```
 
