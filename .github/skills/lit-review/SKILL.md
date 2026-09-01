@@ -15,7 +15,7 @@ argument-hint: '学习范文 / 识别PDF文件路径'
 
 执行前确认：
 - `MCM_Agent_CN/知识库/文献库/范文存档/` 目录存在（含 A题/B题/C题 子目录）
-- 若用户说"识别PDF"，需确认 MinerU 已部署（路径 `F:\MinerU\venv\Scripts\mineru.exe`）
+- 若用户说"识别PDF"，需确认 MinerU 已部署（`mineru` 命令可用，激活 venv 后）
 
 ## 核心指令
 

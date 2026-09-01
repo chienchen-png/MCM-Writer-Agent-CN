@@ -2,9 +2,9 @@
 
 ## 前置条件
 
-- MinerU 路径：`F:\MinerU\venv\Scripts\mineru.exe`
+- MinerU 已安装：`mineru` 命令可用（需先激活其 venv，如 `F:\MinerU\venv\Scripts\activate`）
 - 模型已下载
-- 若不可用，引导用户完成总控 Agent 1.6 节配置
+- 若不可用，引导用户完成总控 Agent 1.6/1.7 节配置
 
 ---
 
@@ -33,7 +33,7 @@ nvidia-smi 2>&1
 **模式一：CPU / 低显存（默认）**
 
 ```powershell
-& "F:\MinerU\venv\Scripts\mineru.exe" `
+mineru `
   -p "<PDF绝对路径>" `
   -o "<临时输出目录>" `
   -b pipeline `
@@ -44,7 +44,7 @@ nvidia-smi 2>&1
 **模式二：NVIDIA GPU 8GB+ 显存（高精度）**
 
 ```powershell
-& "F:\MinerU\venv\Scripts\mineru.exe" `
+mineru `
   -p "<PDF绝对路径>" `
   -o "<临时输出目录>" `
   -b hybrid-engine `
@@ -68,11 +68,14 @@ nvidia-smi 2>&1
 首次调用 MinerU 时，先在终端执行一次轻量测试：
 
 ```powershell
-if (Test-Path "F:\MinerU\venv\Scripts\mineru.exe") {
+if (Get-Command mineru -ErrorAction SilentlyContinue) {
     Write-Host "✅ MinerU 已安装"
+    mineru --version 2>&1
+} elseif (Test-Path "F:\MinerU\venv\Scripts\mineru.exe") {
+    Write-Host "✅ MinerU 已安装（绝对路径）"
     & "F:\MinerU\venv\Scripts\mineru.exe" --version 2>&1
 } else {
-    Write-Host "⚠️ MinerU 未找到，请参考总控 Agent 1.6 节配置"
+    Write-Host "⚠️ MinerU 未找到，请参考总控 Agent 1.7 节配置"
 }
 ```
 

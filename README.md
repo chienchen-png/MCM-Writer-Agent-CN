@@ -170,7 +170,7 @@ Agent 提供写作辅助，但以下内容需要你**自行放入对应文件夹
 | ------------------- | ----------------------------------------------------------------------- | ------------------------------ |
 | 范文 PDF            | 对 Agent 说"识别PDF" → 自动输出到`知识库/文献库/范文存档/{A,B,C}题/` | 供 lit-review 学习风格         |
 | 赛题原文            | `赛题01/赛题原文/问题陈述.md`                                         | 供 paper-writer 每次写作前读取 |
-| 格式规范            | `赛题01/赛题原文/格式要求.md`                                         | 供 latex-builder 格式合规检查  |
+| 格式规范            | `赛题01/赛题原文/赛题规范要求.md`                                                                 | 供 latex-builder 格式合规检查  |
 | 建模思路 & 计算结果 | `赛题01/建模思路/`、`编程计算结果/`                                 | Agent 只读，绝不篡改           |
 
 ### 4. 说一句话开始
@@ -220,16 +220,18 @@ Agent 提供写作辅助，但以下内容需要你**自行放入对应文件夹
 "识别论文PDF"
 ```
 
-**首次使用需部署 MinerU**（Agent 会引导完成）：
+**首次使用需部署 MinerU**（Agent 会引导完成，`F:\MinerU` 仅为示例部署路径，可自定义到任意盘符/目录）：
 
 ```bash
-git clone https://github.com/opendatalab/MinerU.git F:\MinerU
+git clone https://github.com/opendatalab/MinerU.git F:\MinerU   # 可改自定义位置
 cd F:\MinerU
 python -m venv venv
 .\venv\Scripts\activate
 pip install -e .
 mineru --download-models
 ```
+
+> 💡 部署完成后，`mineru` 命令即进入 venv 的 Scripts 目录。调用时**激活 venv 后直接用 `mineru` 命令**即可，无需固定绝对路径。
 
 **识别的功能特性**：
 
@@ -275,13 +277,13 @@ mineru --download-models
 
 ## 目录结构
 
-> **mcmplot 为何在项目根目录，而非 `.github/skills/` 下？** 两者定位不同：
+> **为何 `.github/skills/` 与 `mcmplot/` 分处两处？** 两者定位不同：
 > - **`.github/skills/` 里的配置**（`chart-types.md`、`color-schemes.md`、`templates/`）是 **Markdown 说明文案**，供 AI 阅读、决策用；
-> - **`mcmplot/` 是可安装的 Python 代码包**，供绘图脚本真正 `from mcmplot.style import fig_style` 调用。它必须在 Python 的 `sys.path` 中才能被 import，故作为项目根下的可安装包，用 `pyproject.toml` 声明、`pip install -e .` 装入 `.venv`。
+> - **`mcmplot/` 是可安装的 Python 代码包**，供绘图脚本真正 `from mcmplot.style import fig_style` 调用。它必须在 Python 的 `sys.path` 中才能被 import，故作为 `MCM_Agent_CN/` 下的可安装包，用 `pyproject.toml` 声明、`pip install -e .` 装入 `.venv`。
 > - **分工逻辑**：Skill 负责「讲清楚怎么画」，`mcmplot` 负责「真正能画」。
 
 ```text
-MCM_Agent_CN/
+仓库根目录/
 ├── .github/
 │   ├── agents/
 │   │   └── MCM Writer.agent.md  # 精简总控 Agent（环境自检+路由+MCP自动启用）
@@ -316,32 +318,38 @@ MCM_Agent_CN/
 │           └── references/
 │               ├── md2latex.md
 │               └── error-diagnosis.md
-├── mcmplot/                       # 🆕 可安装绘图样式包（统一字体/配色/DPI）
-│   ├── __init__.py
-│   ├── style.py                   # fig_style() + 中文字体回退
-│   ├── colors.py                  # COLOR_SCHEMES 配色字典
-│   └── helpers.py                 # 子图编号/置信带/多Y轴
-├── pyproject.toml                 # mcmplot 打包配置
-├── 知识库/
-│   ├── 文献库/                   # 范文存档 + 索引
-│   ├── 模板与规范/               # 评分细则 + 范文模板
-│   └── 评委记忆/                 # 历史评审意见
-└── 赛题01/                       # 每道题独立隔离
-    ├── 进度日志.md
-    ├── 赛题配置.md                # 赛题基本信息与进度追踪
-    ├── 赛题原文/
-    │   ├── 问题陈述.md
-    │   └── 格式要求.md           # CUMCM 官方格式规范（用户按当年赛题通知填写）
-    ├── 建模思路/
-    ├── 编程计算结果/
-    ├── 论文草稿/
-    │   ├── 分章节/
-    │   └── 图表/
-    └── LaTeX正文/
-        ├── LaTeX目录说明.md      # 中文文件说明
-        ├── *.tex                  # LaTeX 源文件
-        ├── *.cls                  # 模板格式文件
-        └── figures/               # 图表素材
+├── .vscode/
+│   └── settings.json              # LaTeX Workshop 配方（XeLaTeX 绝对路径）
+├── doc/                           # 论文摘要/标题/总结等写作文档
+├── MCM_Agent_CN/
+│   ├── mcmplot/                   # 🆕 可安装绘图样式包（统一字体/配色/DPI）
+│   │   ├── __init__.py
+│   │   ├── style.py               # fig_style() + 中文字体回退
+│   │   ├── colors.py              # COLOR_SCHEMES 配色字典
+│   │   └── helpers.py             # 子图编号/置信带/多Y轴
+│   ├── pyproject.toml             # mcmplot 打包配置
+│   ├── 知识库/
+│   │   ├── 文献库/               # 范文存档 + 索引
+│   │   ├── 模板与规范/           # 评分细则 + 范文模板
+│   │   └── 评委记忆/             # 历史评审意见
+│   └── 赛题01/                   # 每道题独立隔离
+│       ├── 进度日志.md
+│       ├── 赛题配置.md            # 赛题基本信息与进度追踪
+│       ├── 赛题原文/
+│       │   ├── 问题陈述.md
+│       │   └── 赛题规范要求.md       # CUMCM 官方格式规范（用户按当年赛题通知填写）
+│       ├── 建模思路/
+│       ├── 编程计算结果/
+│       ├── 论文草稿/
+│       │   ├── 分章节/
+│       │   └── 图表/
+│       ├── 支撑材料/              # 🆕 参赛支撑材料（源代码+数据+中间结果+AI详情）
+│       └── LaTeX正文/
+│           ├── LaTeX目录说明.md  # 中文文件说明
+│           ├── *.tex              # LaTeX 源文件
+│           ├── *.cls              # 模板格式文件
+│           └── figures/           # 图表素材
+└── .gitignore
 ```
 
 ---
@@ -397,7 +405,7 @@ Agent 自动安装 `hediet.vscode-drawio` 扩展并生成 `.drawio` 文件到 `�
 <details>
 <summary><b>Q: 格式要求有哪些？</b></summary>
 
-完整的 CUMCM 官方格式规范见 `赛题01/赛题原文/格式要求.md`（用户按当年赛题通知填写）。latex-builder Skill 内置 16 项格式合规检查清单（A4 纸、页边距 25mm、行距 1.38 倍、正文宋体 12pt、标题黑体、摘要楷体、三线表、编号规范等），自动比对 `.cls` 模板与官方要求。
+完整的 CUMCM 官方格式规范见 `赛题01/赛题原文/赛题规范要求.md`（用户按当年赛题通知填写）。latex-builder Skill 内置 16 项格式合规检查清单（A4 纸、页边距 25mm、行距 1.38 倍、正文宋体 12pt、标题黑体、摘要楷体、三线表、编号规范等），自动比对 `.cls` 模板与官方要求。
 
 </details>
 

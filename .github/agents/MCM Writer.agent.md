@@ -69,7 +69,7 @@ LaTeX (xelatex)                 where xelatex                      引导安装 
 matplotlib                     python -c "import matplotlib"       自动 pip install matplotlib
 Pillow                         python -c "from PIL import Image"    自动 pip install Pillow
 draw.io (VS Code 扩展)          code --list-extensions | findstr drawio  自动 code --install-extension（见 1.6）
-MinerU (PDF→MD)                 Test-Path F:\MinerU\venv\...\mineru.exe  引导安装 MinerU（见 1.7）
+MinerU (PDF→MD)                 mineru --version (需先激活 MinerU venv)  引导安装 MinerU（见 1.7）
 CNKI MCP 工具                   尝试调用 mcp_cnki_cnki_search       首次使用引导配置（见 1.5）
 ```
 
@@ -89,7 +89,10 @@ python -c "from PIL import Image; print('Pillow OK')" 2>&1
 code --list-extensions 2>&1 | Select-String "hediet.vscode-drawio"
 
 # 第四步：检查 MinerU（PDF → Markdown 识别）
-Test-Path "F:\MinerU\venv\Scripts\mineru.exe"
+# ✓ 建议方式：按 1.7 节激活用户自己的 MinerU venv 后直接调用 command
+Get-Command mineru -ErrorAction SilentlyContinue
+if (Get-Command mineru -ErrorAction SilentlyContinue) { mineru --version 2>&1 }
+# ✓ 兼容方式：若用户已按 1.7 节固定部署到 F:\MinerU，也可直接探测
 if (Test-Path "F:\MinerU\venv\Scripts\mineru.exe") { & "F:\MinerU\venv\Scripts\mineru.exe" --version 2>&1 }
 ```
 
@@ -105,7 +108,7 @@ if (Test-Path "F:\MinerU\venv\Scripts\mineru.exe") { & "F:\MinerU\venv\Scripts\m
 ✅ matplotlib        已安装
 ✅ Pillow            已安装
 ✅ draw.io           已安装 (hediet.vscode-drawio)
-✅ MinerU            F:\MinerU\venv\Scripts\mineru.exe vX.X.X
+✅ MinerU            mineru vX.X.X
 ✅ CNKI              MCP 工具可用
 ═══════════════════════════════════════
 总结：7/8 项通过，1 项警告（不影响 Markdown 写作）
@@ -219,14 +222,14 @@ MinerU 用于将**往届数学建模竞赛优秀论文的 PDF** 转换为 Markdo
 #### 1.7.1 检测方式
 
 ```powershell
-# 检查 MinerU 可执行文件是否存在
-Test-Path "F:\MinerU\venv\Scripts\mineru.exe"
-# 若存在，验证版本
-& "F:\MinerU\venv\Scripts\mineru.exe" --version
+# 检查 MinerU 可执行文件是否存在（建议方式：已激活 venv，直接用命令）
+if (Get-Command mineru -ErrorAction SilentlyContinue) { mineru --version }
+# 兼容方式：若固定部署到 F:\MinerU，也可探测绝对路径
+if (Test-Path "F:\MinerU\venv\Scripts\mineru.exe") { & "F:\MinerU\venv\Scripts\mineru.exe" --version }
 ```
 
-- 若 `mineru.exe` 存在且可执行 → ✅ 已配置
-- 若文件不存在 → ⚠️ 需配置，进入引导流程
+- 若 `mineru` 命令可用（或 `mineru.exe` 存在）且可执行 → ✅ 已配置
+- 若不可用 → ⚠️ 需配置，进入引导流程
 
 #### 1.7.2 配置步骤引导
 
@@ -433,7 +436,7 @@ MinerU 是上海 AI Lab 开源的 PDF 高精度识别工具，支持：
 | 图片查看 | view_image | 展示生成的图表 PNG |
 | 学术搜索 | CNKI 搜索（仅摘要 + GB/T 7714 引用格式） | 中文文献摘要检索与引用格式生成 |
 | 论文搜索 | paper-find MCP（Crossref + arXiv + Sci-Hub） | 国际论文摘要检索与 PDF 下载 |
-| PDF 识别 | MinerU（`F:\MinerU\venv\Scripts\mineru.exe`） | 往届数模范文 PDF → Markdown（公式/表格/图片） |
+| PDF 识别 | MinerU（`mineru` 命令，需先激活 venv） | 往届数模范文 PDF → Markdown（公式/表格/图片） |
 
 ### 7.4 MCP 服务器配置（自动启用）
 
